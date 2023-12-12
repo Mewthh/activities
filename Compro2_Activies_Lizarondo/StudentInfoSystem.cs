@@ -162,10 +162,10 @@ namespace Compro2_Activies_Lizarondo
             Console.ForegroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine("Enter student name to update: ");
             Console.ResetColor();
-            string StudentNameToUpdate = Console.ReadLine();
+            var StudentNameToUpdate = Console.ReadLine();
             //JCxAya
             int updateChoice;
-            for (int i = 0; i < Students1.Count; i++)
+            for (var i = 0; i < Students1.Count; i++)
             {
                 if (Students1[i].Contains(StudentNameToUpdate))
                 {
