@@ -14,7 +14,7 @@ namespace Compro2_Activies_Lizarondo
         static void Main()
         {
             StudentInfoSystem sias = new StudentInfoSystem();
-            sias.MainList();
+            sias.LoginUsername();
         }
         
         //static void DemoList()

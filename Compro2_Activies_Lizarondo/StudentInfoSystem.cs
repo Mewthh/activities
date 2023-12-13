@@ -8,9 +8,15 @@ namespace Compro2_Activies_Lizarondo
 {
     class StudentInfoSystem
     {
+        private static string username;
+        private static string password;
+        private string academic;
+
         List<List<String>> Students1 = new List<List<String>>();
-        public void MainList()
+        static int StudentID = 1;
+        private void MainList()
         {
+            Console.Clear();
             while (true)
             {
                 Console.WriteLine();
@@ -113,10 +119,8 @@ namespace Compro2_Activies_Lizarondo
         {
             while (true)
             {
-                Console.ForegroundColor= ConsoleColor.Blue;
-                Console.WriteLine("Enter student number");
-                Console.WriteLine("23-24-"); Console.ResetColor();
-                string no = Console.ReadLine();
+                string student_id = $"{academic}-{StudentID:D4}";
+                StudentID++;
 
                 Console.ForegroundColor = ConsoleColor.Blue;
                 Console.WriteLine("Enter student full name: ");
@@ -149,7 +153,7 @@ namespace Compro2_Activies_Lizarondo
                 string mobile = Console.ReadLine();
                 
 
-                Students1.Add(new List<string> {no, name, program, year, email, address, mobile});
+                Students1.Add(new List<string> { student_id, name, program, year, email, address, mobile});
                 
 
                 Confirm();
@@ -175,28 +179,24 @@ namespace Compro2_Activies_Lizarondo
                         switch (updateChoice)
                         {
                             case 1:
-                                Console.WriteLine("Enter new student number: ");
-                                Console.WriteLine("23-24-");  Students1[i][0] = Console.ReadLine();
+                                Console.WriteLine("Enter new student program: ");
+                                Students1[i][0] = Console.ReadLine();
                                 break;
                             case 2:
-                                Console.WriteLine("Enter new student program: ");
+                                Console.WriteLine("Enter new student year: ");
                                 Students1[i][2] = Console.ReadLine();
                                 break;
                             case 3:
-                                Console.WriteLine("Enter new student year: ");
+                                Console.WriteLine("Enter new student email: ");
                                 Students1[i][3] = Console.ReadLine();
                                 break;
                             case 4:
-                                Console.WriteLine("Enter new student email: ");
+                                Console.WriteLine("Enter new student address: ");
                                 Students1[i][4] = Console.ReadLine();
                                 break;
                             case 5:
-                                Console.WriteLine("Enter new student address: ");
-                                Students1[i][5] = Console.ReadLine();
-                                break;
-                            case 6:
                                 Console.WriteLine("Enter new student mobile number: ");
-                                Students1[i][6] = Console.ReadLine();
+                                Students1[i][5] = Console.ReadLine();
                                 break;
                             default:
                                 Console.ForegroundColor = ConsoleColor.Red;
@@ -279,23 +279,97 @@ namespace Compro2_Activies_Lizarondo
 
             foreach (var student in Students1)
             {
-                Console.WriteLine($"Student: 23-24-{string.Join(", ", student)}");
+                //Console.WriteLine($"Student ID: {student[0]} Name: {student[1]} Program: {student[2]} Year: {student[3]} Email: {student[4]} Address: {student[5]} Mobile No. {student[6]}");
+                Console.WriteLine();
+                Console.WriteLine($"Student ID: {student[0]}");
+                Console.WriteLine($"Student Name: {student[1]}");
+                Console.WriteLine($"Student Program: {student[2]}");
+                Console.WriteLine($"Student Year: {student[3]}");
+                Console.WriteLine($"Student Email: {student[4]}");
+                Console.WriteLine($"Student Address: {student[5]}");
+                Console.WriteLine($"Student Mobile No.: {student[6]}");
             }
+            
         }
         private void UpdateMenu()
         {
             Console.WriteLine("╔════════════════════════════════════════╗");
             Console.WriteLine("║    Choose the information to update:   ║");
             Console.WriteLine("╠════════════════════════════════════════╣");
-            Console.WriteLine("║ 1. Student Number                      ║");
-            Console.WriteLine("║ 2. Program                             ║");
-            Console.WriteLine("║ 3. Year                                ║");
-            Console.WriteLine("║ 4. Email                               ║");
-            Console.WriteLine("║ 5. Address                             ║");
-            Console.WriteLine("║ 6. Mobile Number                       ║");
+            Console.WriteLine("║ 1. Program                             ║");
+            Console.WriteLine("║ 2. Year                                ║");
+            Console.WriteLine("║ 3. Email                               ║");
+            Console.WriteLine("║ 4. Address                             ║");
+            Console.WriteLine("║ 5. Mobile Number                       ║");
             Console.WriteLine("╠════════════════════════════════════════╣");
             Console.WriteLine("║ Choose an option:                      ║");
             Console.WriteLine("╚════════════════════════════════════════╝");
+        }
+        public void LoginUsername()
+        {
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║                 LOGIN                  ║");
+            Console.WriteLine("╠════════════════════════════════════════╣");
+            Console.WriteLine("║ Enter your username:                   ║");
+            Console.WriteLine("╚════════════════════════════════════════╝");
+            username = Console.ReadLine();
+            Console.Clear();
+
+            Console.WriteLine("╔════════════════════════════════════════╗");
+            Console.WriteLine("║                 LOGIN                  ║");
+            Console.WriteLine("╠════════════════════════════════════════╣");
+            Console.WriteLine("║ Enter your password:                   ║");
+            Console.WriteLine("╚════════════════════════════════════════╝");
+            password = asterisk();
+            Console.Clear();
+            
+            if (username == "admin" && password == "admin123")
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Login Successful");
+                Console.ResetColor();
+                AcademicYear();
+            }
+            else
+            {
+                Console.Clear();
+                Console.ForegroundColor= ConsoleColor.Red;
+                Console.WriteLine("Account is not registered.");
+                Console.ResetColor();
+                LoginUsername();
+            }
+        }
+        private void AcademicYear()
+        {
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine("Set Academic Year (Ex: 23-24): ");
+            Console.ResetColor();
+            academic = Console.ReadLine();
+            MainList();
+        }
+        private string asterisk()
+        {
+            StringBuilder passwordAsterisk = new StringBuilder();
+            ConsoleKeyInfo key;
+
+            do
+            {
+                key = Console.ReadKey(true);
+
+                if (key.Key != ConsoleKey.Backspace && key.Key != ConsoleKey.Enter)
+                {
+                    passwordAsterisk.Append(key.KeyChar);
+                    Console.Write("*");
+                }
+                else if (key.Key == ConsoleKey.Backspace && passwordAsterisk.Length > 0)
+                {
+                    passwordAsterisk.Length -= 1;
+                    Console.Write("\b \b");
+                }
+            }
+            while (key.Key != ConsoleKey.Enter);
+            Console.WriteLine();
+            return passwordAsterisk.ToString();
         }
     }
 }
